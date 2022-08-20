@@ -12,6 +12,8 @@ class Strings {
 
   //String for Home Page Bloc
   static const String noDataFound = "No Data Found";
+  static const String connectivityFailure =
+      "Please check your internet connection..!!";
 
   //Strings for home page
   static const String search = "Search";
