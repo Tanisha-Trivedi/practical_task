@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
             body: Column(
               children: [
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 SearchTextField(
                   text: search,
@@ -61,74 +61,81 @@ class _HomeScreenState extends State<HomeScreen> {
                   onChanged: searchRow,
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 ValueListenableBuilder(
                     valueListenable: valueNotifier,
                     builder: (context, value, child) => Expanded(
-                          child: ListView.builder(
-                            itemBuilder: (BuildContext context, int index) {
-                              return Card(
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 10.0,
-                                  vertical: 5.0,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          height: 70,
-                                          width: 70,
-                                          child: CachedNetworkImage(
-                                            fit: BoxFit.contain,
-                                            imageUrl: valueNotifier
-                                                .value[index].imageHref
-                                                .toString(),
-                                            placeholder: (context, url) =>
-                                                Image.asset(
-                                              ImageResources.placeholderImage,
-                                            ),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Image.asset(
-                                              ImageResources.placeholderImage,
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                valueNotifier.value[index].title
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 15),
+                          flex: 1,
+                          child: RefreshIndicator(
+                            onRefresh: _onRefresh,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              // physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                return Card(
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 10.0,
+                                    vertical: 5.0,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 70,
+                                            width: 70,
+                                            child: CachedNetworkImage(
+                                              fit: BoxFit.contain,
+                                              imageUrl: valueNotifier
+                                                  .value[index].imageHref
+                                                  .toString(),
+                                              placeholder: (context, url) =>
+                                                  Image.asset(
+                                                ImageResources.placeholderImage,
                                               ),
-                                              Text(
-                                                valueNotifier
-                                                    .value[index].description
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  fontSize: 13,
-                                                  color: Colors.grey.shade600,
-                                                ),
-                                              )
-                                            ],
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Image.asset(
+                                                ImageResources.placeholderImage,
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ]),
-                                ),
-                              );
-                            },
-                            itemCount: valueNotifier.value.length,
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  valueNotifier
+                                                      .value[index].title
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                      fontSize: 15),
+                                                ),
+                                                Text(
+                                                  valueNotifier
+                                                      .value[index].description
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 13,
+                                                    color: Colors.grey.shade600,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ]),
+                                  ),
+                                );
+                              },
+                              itemCount: valueNotifier.value.length,
+                            ),
                           ),
                         )),
               ],
@@ -143,6 +150,10 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
     );
+  }
+
+  Future<void> _onRefresh() async {
+    context.read<HomePageBloc>().add(GetHomePageData());
   }
 
   void searchRow(String searchString) {
