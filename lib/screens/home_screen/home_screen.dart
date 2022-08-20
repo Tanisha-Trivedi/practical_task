@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               );
                             },
-                            itemCount: homePageListResponse.rows.length,
+                            itemCount: valueNotifier.value.length,
                           ),
                         )),
               ],
