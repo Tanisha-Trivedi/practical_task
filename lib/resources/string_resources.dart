@@ -13,5 +13,6 @@ class Strings {
   //String for Home Page Bloc
   static const String noDataFound = "No Data Found";
 
+  //Strings for home page
+  static const String search = "Search";
 }
-
