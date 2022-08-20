@@ -71,7 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             onRefresh: _onRefresh,
                             child: ListView.builder(
                               shrinkWrap: true,
-                              // physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (BuildContext context, int index) {
                                 return Card(
                                   margin: const EdgeInsets.symmetric(
