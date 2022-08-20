@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../blocs/homepage_bloc/homepage_bloc.dart';
 import '../../resources/string_resources.dart';
 import '../home_screen/home_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,7 +18,10 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 2)).then((value) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (BuildContext context) => const HomeScreen(),
+          builder: (context) => BlocProvider(
+            create: (context) => HomePageBloc()..add(GetHomePageData()),
+            child: const HomeScreen(),
+          ),
         ),
       );
     });

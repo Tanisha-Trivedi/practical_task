@@ -10,5 +10,8 @@ class Strings {
   static const String receiveTimeout = "Received Time out";
   static const String sendTimeout = "Send Time out";
 
+  //String for Home Page Bloc
+  static const String noDataFound = "No Data Found";
+
 }
 
